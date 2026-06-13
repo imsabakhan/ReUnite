@@ -48,10 +48,18 @@ function ItemDetails() {
         {item.location}
       </p>
 
-      <p>
-        <strong>Status:</strong>{" "}
-        {item.status}
-      </p>
+    <p>
+  <strong>Status:</strong>{" "}
+  <span
+    className={`status-badge ${
+      item.status === "lost"
+        ? "lost-badge"
+        : "found-badge"
+    }`}
+  >
+    {item.status.toUpperCase()}
+  </span>
+</p>
 
       <p>
         <strong>Contact:</strong>{" "}

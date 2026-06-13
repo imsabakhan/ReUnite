@@ -147,3 +147,24 @@ hr {
   height: 45px;
   object-fit: contain;
 }
+.status-container {
+  margin-top: 10px;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: bold;
+  color: white;
+  text-transform: uppercase;
+}
+
+.lost-badge {
+  background-color: #ef4444;
+}
+
+.found-badge {
+  background-color: #22c55e;
+}

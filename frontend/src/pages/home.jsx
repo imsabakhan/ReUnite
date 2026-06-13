@@ -117,19 +117,17 @@ const [filter, setFilter] = useState("all");
 
       <p>📍 {item.location}</p>
 
-      <p>
-        Status:
-        <span
-          className={
-            item.status === "lost"
-              ? "status-lost"
-              : "status-found"
-          }
-        >
-          {" "}
-          {item.status}
-        </span>
-      </p>
+     <div className="status-container">
+  <span
+    className={`status-badge ${
+      item.status === "lost"
+        ? "lost-badge"
+        : "found-badge"
+    }`}
+  >
+    {item.status.toUpperCase()}
+  </span>
+</div>
 
       <p>📧 {item.contactEmail}</p>
     </div>
