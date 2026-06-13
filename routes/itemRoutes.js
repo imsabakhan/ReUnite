@@ -59,4 +59,19 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+// Get Single Item
+router.get("/:id", async (req, res) => {
+  try {
+    const item = await LostItem.findById(
+      req.params.id
+    );
+
+    res.status(200).json(item);
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+    });
+  }
+});
+
 module.exports = router;

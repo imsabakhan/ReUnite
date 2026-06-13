@@ -14,7 +14,7 @@ function ItemDetails() {
   const fetchItem = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:8000/api/items/${id}`
+        `https://reunite-j7qe.onrender.com/api/items/${id}`
       );
 
       setItem(res.data);
@@ -34,33 +34,35 @@ function ItemDetails() {
       <h1>{item.title}</h1>
 
       <p>
-        <strong>Description:</strong>
-        {" "}
+        <strong>Description:</strong>{" "}
         {item.description}
       </p>
 
       <p>
-        <strong>Category:</strong>
-        {" "}
+        <strong>Category:</strong>{" "}
         {item.category}
       </p>
 
       <p>
-        <strong>Location:</strong>
-        {" "}
+        <strong>Location:</strong>{" "}
         {item.location}
       </p>
 
       <p>
-        <strong>Status:</strong>
-        {" "}
+        <strong>Status:</strong>{" "}
         {item.status}
       </p>
 
       <p>
-        <strong>Contact:</strong>
-        {" "}
+        <strong>Contact:</strong>{" "}
         {item.contactEmail}
+      </p>
+
+      <p>
+        <strong>Reported On:</strong>{" "}
+        {new Date(
+          item.createdAt
+        ).toLocaleDateString()}
       </p>
     </div>
   );

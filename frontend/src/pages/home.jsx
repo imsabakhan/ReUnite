@@ -101,31 +101,40 @@ const [filter, setFilter] = useState("all");
       ? true
       : item.status === filter
   )
-  .map((item) => (
-              <div key={item._id} className="card">
-                <h3>{item.title}</h3>
+ .map((item) => (
+  <Link
+    key={item._id}
+    to={`/item/${item._id}`}
+    style={{
+      textDecoration: "none",
+      color: "inherit"
+    }}
+  >
+    <div className="card">
+      <h3>{item.title}</h3>
 
-                <p>{item.description}</p>
+      <p>{item.description}</p>
 
-                <p>📍 {item.location}</p>
+      <p>📍 {item.location}</p>
 
-                <p>
-                  Status:
-                  <span
-                    className={
-                      item.status === "lost"
-                        ? "status-lost"
-                        : "status-found"
-                    }
-                  >
-                    {" "}
-                    {item.status}
-                  </span>
-                </p>
+      <p>
+        Status:
+        <span
+          className={
+            item.status === "lost"
+              ? "status-lost"
+              : "status-found"
+          }
+        >
+          {" "}
+          {item.status}
+        </span>
+      </p>
 
-                <p>📧 {item.contactEmail}</p>
-              </div>
-            ))
+      <p>📧 {item.contactEmail}</p>
+    </div>
+  </Link>
+))
         )}
       </div>
     </>
