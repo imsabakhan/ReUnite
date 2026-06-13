@@ -28,7 +28,15 @@ const [filter, setFilter] = useState("all");
     <>
       {/* Navbar */}
       <nav className="navbar">
-        <h2>ReUnite</h2>
+        <div className="logo-section">
+  <img
+    src="/logo.png"
+    alt="ReUnite Logo"
+    className="logo"
+  />
+
+  <h2>ReUnite</h2>
+</div>
 
         <div className="nav-links">
           <Link to="/">Home</Link>

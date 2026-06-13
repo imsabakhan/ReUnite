@@ -135,3 +135,15 @@ hr {
 .filters button:hover {
   background: #d1d5db;
 }
+
+.logo-section {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo {
+  width: 45px;
+  height: 45px;
+  object-fit: contain;
+}
