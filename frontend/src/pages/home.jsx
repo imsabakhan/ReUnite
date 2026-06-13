@@ -14,9 +14,9 @@ const [filter, setFilter] = useState("all");
 
   const fetchItems = async () => {
     try {
-      const res = await axios.get(
-        "http://localhost:8000/api/items"
-      );
+     const res = await axios.get(
+  "https://reunite-j7qe.onrender.com/api/items"
+);
 
       setItems(res.data);
     } catch (err) {

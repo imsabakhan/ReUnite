@@ -24,8 +24,8 @@ function AddItem() {
     e.preventDefault();
 
     try {
-    await axios.post(
-  "http://localhost:8000/api/items",
+  await axios.post(
+  "https://reunite-j7qe.onrender.com/api/items",
   formData
 );
 
