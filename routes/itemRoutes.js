@@ -45,4 +45,18 @@ router.get("/", async (req, res) => {
   }
 });
 
+router.get("/:id", async (req, res) => {
+  try {
+    const item = await LostItem.findById(
+      req.params.id
+    );
+
+    res.json(item);
+  } catch (err) {
+    res.status(500).json({
+      message: err.message,
+    });
+  }
+});
+
 module.exports = router;

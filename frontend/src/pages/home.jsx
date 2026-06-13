@@ -4,24 +4,19 @@ import { Link } from "react-router-dom";
 import "../styles/Home.css";
 
 function Home() {
-  console.log("Home component rendered");
-
-  const [items, setItems] = useState([]);
+const [items, setItems] = useState([]);
+const [search, setSearch] = useState("");
+const [filter, setFilter] = useState("all");
 
   useEffect(() => {
-    console.log("useEffect running");
     fetchItems();
   }, []);
 
   const fetchItems = async () => {
-    console.log("Fetching data from backend...");
-
     try {
       const res = await axios.get(
         "http://localhost:8000/api/items"
       );
-
-      console.log("Response received:", res.data);
 
       setItems(res.data);
     } catch (err) {
@@ -29,50 +24,103 @@ function Home() {
     }
   };
 
-  console.log("Items state:", items);
-
   return (
-    <div className="container">
-      <div className="header">
-        <h1>🎒 ReUnite</h1>
-        <p>Lost Something? ReUnite Helps You Find It.</p>
+    <>
+      {/* Navbar */}
+      <nav className="navbar">
+        <h2>ReUnite</h2>
+
+        <div className="nav-links">
+          <Link to="/">Home</Link>
+
+          <Link to="/add">
+            Report Item
+          </Link>
+        </div>
+      </nav>
+
+      {/* Main Container */}
+      <div className="container">
+        <div className="header">
+          <h1>ReUnite</h1>
+          <p>Lost Something? ReUnite Helps You Find It.</p>
+          <p>Connecting lost belongings with their rightful owners.</p>
+        </div>
+
+        <Link to="/add">
+          <button>➕ Report Lost Item</button>
+        </Link>
+
+        <hr />
+
+        {/* Search Bar */}
+        <input
+          type="text"
+          placeholder="🔍 Search items..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          className="search-bar"
+        />
+
+        {/* Filter Buttons */}
+       <div className="filters">
+  <button onClick={() => setFilter("all")}>
+    All
+  </button>
+
+  <button onClick={() => setFilter("lost")}>
+    Lost
+  </button>
+
+  <button onClick={() => setFilter("found")}>
+    Found
+  </button>
+</div>
+
+        <h2>Recent Reports</h2>
+
+        {items.length === 0 ? (
+          <p>No items found</p>
+        ) : (
+         items
+  .filter((item) =>
+    item.title
+      .toLowerCase()
+      .includes(search.toLowerCase())
+  )
+  .filter((item) =>
+    filter === "all"
+      ? true
+      : item.status === filter
+  )
+  .map((item) => (
+              <div key={item._id} className="card">
+                <h3>{item.title}</h3>
+
+                <p>{item.description}</p>
+
+                <p>📍 {item.location}</p>
+
+                <p>
+                  Status:
+                  <span
+                    className={
+                      item.status === "lost"
+                        ? "status-lost"
+                        : "status-found"
+                    }
+                  >
+                    {" "}
+                    {item.status}
+                  </span>
+                </p>
+
+                <p>📧 {item.contactEmail}</p>
+              </div>
+            ))
+        )}
       </div>
-
-      <Link to="/add">
-        <button>➕ Report Lost Item</button>
-      </Link>
-
-      <hr />
-
-      <h2>Recent Reports</h2>
-
-      {items.length === 0 ? (
-        <p>No items found</p>
-      ) : (
-        items.map((item) => (
-          <div key={item._id} className="card">
-            <h3>{item.title}</h3>
-
-            <p>{item.description}</p>
-
-            <p>📍 {item.location}</p>
-
-           <p>
-  Status:
-  <strong
-    style={{
-      color: item.status === "lost" ? "red" : "green",
-    }}
-  >
-    {" "}{item.status}
-  </strong>
-</p>
-
-            <p>📧 {item.contactEmail}</p>
-          </div>
-        ))
-      )}
-    </div>
+    </>
   );
 }
 

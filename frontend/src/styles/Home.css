@@ -17,12 +17,121 @@ body {
 
 .header h1 {
   color: #1e40af;
+  font-size: 3rem;
+  margin-bottom: 10px;
+}
+
+.header p {
+  color: #555;
+  font-size: 1.1rem;
+}
+
+button {
+  background: #2563eb;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+button:hover {
+  background: #1d4ed8;
 }
 
 .card {
   background: white;
-  padding: 15px;
+  padding: 20px;
+  border-radius: 15px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 18px rgba(0,0,0,0.15);
+}
+
+.card h3 {
+  color: #1e40af;
+  margin-top: 0;
+}
+
+.card p {
+  color: #444;
+  margin: 8px 0;
+}
+
+.status-lost {
+  color: #dc2626;
+  font-weight: bold;
+}
+
+.status-found {
+  color: #16a34a;
+  font-weight: bold;
+}
+
+hr {
+  border: none;
+  height: 1px;
+  background: #ddd;
+  margin: 25px 0;
+}
+
+/* Navbar */
+
+.navbar {
+  background: #1e40af;
+  color: white;
+  padding: 15px 25px;
   border-radius: 12px;
-  margin-bottom: 15px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  margin-bottom: 25px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar h2 {
+  margin: 0;
+}
+
+.nav-links {
+  display: flex;
+  gap: 20px;
+}
+
+.nav-links a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.nav-links a:hover {
+  text-decoration: underline;
+}
+
+/* Search */
+
+.search-bar {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 20px;
+
+  border: 1px solid #ddd;
+  border-radius: 8px;
+
+  font-size: 16px;
+}
+
+.filters button {
+  background: #e5e7eb;
+  color: black;
+}
+
+.filters button:hover {
+  background: #d1d5db;
 }
