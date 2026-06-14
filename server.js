@@ -12,7 +12,7 @@ app.use(
       "http://localhost:5173",
       "https://re-unite.vercel.app",
     ],
-    methods: ["GET", "POST"],
+   methods: ["GET", "POST", "PUT"],
     credentials: true,
   })
 );

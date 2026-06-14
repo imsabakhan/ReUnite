@@ -23,64 +23,80 @@ function ItemDetails() {
     }
   };
 
+  const markAsFound = async () => {
+    try {
+      const res = await axios.put(
+        `https://reunite-j7qe.onrender.com/api/items/${id}/found`
+      );
+
+      setItem(res.data);
+
+      alert("✅ Item marked as found!");
+    } catch (err) {
+      console.log(err);
+      alert("Failed to update item");
+    }
+  };
+
   if (!item) {
-    return (
-      <div className="container">
-        <h2>Loading...</h2>
-      </div>
-    );
+    return <h2>Loading...</h2>;
   }
 
   return (
     <div className="container">
-      <Link to="/" className="back-link">
-        ⬅ Back to Home
-      </Link>
+      <Link to="/">⬅ Back</Link>
 
-      <div className="card details-card">
-        <h1>{item.title}</h1>
+      <h1>{item.title}</h1>
 
-        <p>
-          <strong>Description:</strong>{" "}
-          {item.description}
-        </p>
+      <p>
+        <strong>Description:</strong> {item.description}
+      </p>
 
-        <p>
-          <strong>Category:</strong>{" "}
-          {item.category}
-        </p>
+      <p>
+        <strong>Category:</strong> {item.category}
+      </p>
 
-        <p>
-          <strong>Location:</strong>{" "}
-          📍 {item.location}
-        </p>
+      <p>
+        <strong>Location:</strong> {item.location}
+      </p>
 
-        <p>
-          <strong>Status:</strong>{" "}
-          <span
-            className={`status-badge ${
-              item.status === "lost"
-                ? "lost-badge"
-                : "found-badge"
-            }`}
-          >
-            {item.status.toUpperCase()}
-          </span>
-        </p>
+      <p>
+        <strong>Status:</strong>{" "}
+        <span
+          className={`status-badge ${
+            item.status === "lost"
+              ? "lost-badge"
+              : "found-badge"
+          }`}
+        >
+          {item.status.toUpperCase()}
+        </span>
+      </p>
 
-        <p>
-          <strong>Reported On:</strong>{" "}
-          {item.createdAt
-            ? new Date(item.createdAt).toLocaleDateString()
-            : "N/A"}
-        </p>
+      <a href={`mailto:${item.contactEmail}`}>
+        <button className="contact-btn">
+          📧 Contact Owner
+        </button>
+      </a>
 
-        <a href={`mailto:${item.contactEmail}`}>
-          <button className="contact-btn">
-            📧 Contact Owner
-          </button>
-        </a>
-      </div>
+      {" "}
+
+      {item.status === "lost" && (
+        <button
+          onClick={markAsFound}
+          style={{
+            marginLeft: "10px",
+            backgroundColor: "#22c55e"
+          }}
+        >
+          ✅ Mark as Found
+        </button>
+      )}
+
+      <p>
+        <strong>Reported On:</strong>{" "}
+        {new Date(item.createdAt).toLocaleDateString()}
+      </p>
     </div>
   );
 }
