@@ -168,3 +168,97 @@ hr {
 .found-badge {
   background-color: #22c55e;
 }
+
+/* Status Badge */
+
+.status-container {
+  margin-top: 10px;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: bold;
+  color: white;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.lost-badge {
+  background-color: #ef4444;
+}
+
+.found-badge {
+  background-color: #22c55e;
+}
+
+/* Filter Buttons */
+
+.filters {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.filters button {
+  background: #e5e7eb;
+  color: #111827;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.filters button:hover {
+  background: #d1d5db;
+}
+
+/* Contact Button */
+
+.contact-btn {
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  padding: 12px 18px;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-top: 15px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.contact-btn:hover {
+  background-color: #1d4ed8;
+}
+
+/* Item Details Page */
+
+.details-card {
+  max-width: 700px;
+  margin: 30px auto;
+}
+
+.details-card h1 {
+  color: #1e40af;
+  margin-bottom: 20px;
+}
+
+.details-card p {
+  font-size: 16px;
+  margin: 12px 0;
+  line-height: 1.6;
+}
+
+
+
+.back-link {
+  text-decoration: none;
+  color: #2563eb;
+  font-weight: bold;
+}
+
+.back-link:hover {
+  text-decoration: underline;
+}
