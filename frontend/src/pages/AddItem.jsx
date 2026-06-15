@@ -3,121 +3,150 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 function AddItem() {
-  const navigate = useNavigate();
-  const [formData, setFormData] = useState({
-    title: "",
-    description: "",
-    category: "",
-    location: "",
-    status: "lost",
-    contactEmail: "",
-  });
+const navigate = useNavigate();
 
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    try {
-  await axios.post(
-  "https://reunite-j7qe.onrender.com/api/items",
-  formData
-);
-
-setFormData({
-  title: "",
-  description: "",
-  category: "",
-  location: "",
-  status: "lost",
-  contactEmail: "",
+const [formData, setFormData] = useState({
+title: "",
+description: "",
+category: "",
+location: "",
+status: "lost",
+contactEmail: "",
 });
 
-alert("Item Reported Successfully!");
+const [image, setImage] = useState(null);
 
-navigate("/");
-    } catch (err) {
-      console.log(err);
-      alert("Error saving item");
-    }
-  };
+const handleChange = (e) => {
+setFormData({
+...formData,
+[e.target.name]: e.target.value,
+});
+};
 
-  return (
-    <div style={{ padding: "20px" }}>
-      <h1>Report Lost Item</h1>
+const handleSubmit = async (e) => {
+e.preventDefault();
 
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          name="title"
-          placeholder="Item Title"
-          value={formData.title}
-          onChange={handleChange}
-          required
-        />
+const data = new FormData();
 
-        <br /><br />
+data.append("title", formData.title);
+data.append("description", formData.description);
+data.append("category", formData.category);
+data.append("location", formData.location);
+data.append("status", formData.status);
+data.append("contactEmail", formData.contactEmail);
 
-        <input
-          type="text"
-          name="description"
-          placeholder="Description"
-          value={formData.description}
-          onChange={handleChange}
-        />
+if (image) {
+  data.append("image", image);
+}
 
-        <br /><br />
+try {
+await axios.post(
+  "http://localhost:8000/api/items",
+  data
+);
 
-        <input
-          type="text"
-          name="category"
-          placeholder="Category"
-          value={formData.category}
-          onChange={handleChange}
-        />
+  alert("Item Reported Successfully!");
 
-        <br /><br />
+  navigate("/");
+} catch (err) {
+  console.log("FULL ERROR:", err);
+  console.log("RESPONSE:", err.response?.data);
 
-        <input
-          type="text"
-          name="location"
-          placeholder="Location"
-          value={formData.location}
-          onChange={handleChange}
-        />
-
-        <br /><br />
-
-        <input
-          type="email"
-          name="contactEmail"
-          placeholder="Email"
-          value={formData.contactEmail}
-          onChange={handleChange}
-        />
-        
-        <br /><br />
-        <select
-  name="status"
-  value={formData.status}
-  onChange={handleChange}
->
-  <option value="lost">Lost</option>
-  <option value="found">Found</option>
-</select>
-
-<br /><br />
-        <button type="submit">
-          Submit Report
-        </button>
-      </form>
-    </div>
+  alert(
+    JSON.stringify(err.response?.data)
   );
+}
+
+};
+
+return (
+<div style={{ padding: "20px" }}>
+Report Lost Item
+
+  <form onSubmit={handleSubmit}>
+    <input
+      type="text"
+      name="title"
+      placeholder="Item Title"
+      value={formData.title}
+      onChange={handleChange}
+      required
+    />
+
+    <br /><br />
+
+    <input
+      type="text"
+      name="description"
+      placeholder="Description"
+      value={formData.description}
+      onChange={handleChange}
+      required
+    />
+
+    <br /><br />
+
+    <input
+      type="text"
+      name="category"
+      placeholder="Category"
+      value={formData.category}
+      onChange={handleChange}
+      required
+    />
+
+    <br /><br />
+
+    <input
+      type="text"
+      name="location"
+      placeholder="Location"
+      value={formData.location}
+      onChange={handleChange}
+      required
+    />
+
+    <br /><br />
+
+    <input
+      type="email"
+      name="contactEmail"
+      placeholder="Email"
+      value={formData.contactEmail}
+      onChange={handleChange}
+      required
+    />
+
+    <br /><br />
+
+    <select
+      name="status"
+      value={formData.status}
+      onChange={handleChange}
+    >
+      <option value="lost">Lost</option>
+      <option value="found">Found</option>
+    </select>
+
+    <br /><br />
+
+    <input
+      type="file"
+      accept="image/*"
+      onChange={(e) =>
+        setImage(e.target.files[0])
+      }
+    />
+
+    <br /><br />
+
+    <button type="submit">
+      Submit Report
+    </button>
+  </form>
+</div>
+
+);
 }
 
 export default AddItem;

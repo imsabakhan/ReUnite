@@ -47,8 +47,9 @@ button:hover {
   margin-bottom: 20px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.08);
   transition: all 0.3s ease;
-}
 
+  max-width: 500px;
+}
 .card:hover {
   transform: translateY(-4px);
   box-shadow: 0 8px 18px rgba(0,0,0,0.15);
@@ -88,6 +89,8 @@ hr {
   color: white;
   padding: 15px 25px;
   border-radius: 12px;
+
+  margin-top: 20px;
   margin-bottom: 25px;
 
   display: flex;
@@ -261,4 +264,12 @@ hr {
 
 .back-link:hover {
   text-decoration: underline;
+}
+
+.item-image {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 10px;
 }

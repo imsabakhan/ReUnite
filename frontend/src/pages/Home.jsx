@@ -108,22 +108,32 @@ function Home() {
                 : item.status === filter
             )
             .map((item) => (
-              <div key={item._id} className="card">
+             <div key={item._id} className="card">
 
-                {/* Clickable Content */}
-                <Link
-                  to={`/item/${item._id}`}
-                  style={{
-                    textDecoration: "none",
-                    color: "inherit",
-                  }}
-                >
-                  <h3>{item.title}</h3>
+  {/* Clickable Content */}
+  <Link
+    to={`/item/${item._id}`}
+    style={{
+      textDecoration: "none",
+      color: "inherit",
+    }}
+  >
 
-                  <p>{item.description}</p>
+    {item.image && (
+      <img
+        src={item.image}
+        alt={item.title}
+        className="item-image"
+      />
+    )}
 
-                  <p>📍 {item.location}</p>
-                </Link>
+    <h3>{item.title}</h3>
+
+    <p>{item.description}</p>
+
+    <p>📍 {item.location}</p>
+
+  </Link>
 
                 {/* Status Badge */}
                 <div className="status-container">
