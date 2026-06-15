@@ -13,9 +13,7 @@ function ItemDetails() {
 
   const fetchItem = async () => {
     try {
-      const res = await axios.get(
-        `https://reunite-j7qe.onrender.com/api/items/${id}`
-      );
+      const res = await axios.get(`${API_URL}/items/${id}`);
 
       setItem(res.data);
     } catch (err) {

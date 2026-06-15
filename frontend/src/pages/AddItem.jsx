@@ -40,10 +40,7 @@ if (image) {
 }
 
 try {
-await axios.post(
-  "http://localhost:8000/api/items",
-  data
-);
+await axios.post(`${API_URL}/items`, data);
 
   alert("Item Reported Successfully!");
 
