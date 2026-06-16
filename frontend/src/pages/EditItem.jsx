@@ -40,22 +40,36 @@ function EditItem() {
   };
 
   // Submit updated data
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+ const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    try {
-      await axios.put(
-        `${API_URL}/api/items/${id}`,
-        formData
-      );
+  try {
+    const data = new FormData();
 
-      alert("Item updated successfully!");
-      navigate("/");
-    } catch (err) {
-      console.log("Update error:", err);
-      alert("Error updating item");
+    data.append("title", formData.title);
+    data.append("description", formData.description);
+    data.append("category", formData.category);
+    data.append("location", formData.location);
+    data.append("status", formData.status);
+    data.append("contactEmail", formData.contactEmail);
+
+    if (image) {
+      data.append("image", image);
     }
-  };
+
+    await axios.put(`${API_URL}/api/items/${id}`, data, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+    alert("Item updated successfully!");
+    navigate("/");
+  } catch (err) {
+    console.log(err);
+    alert("Error updating item");
+  }
+};
 
   return (
     <div style={{ padding: "20px" }}>
@@ -116,7 +130,13 @@ function EditItem() {
         />
 
         <br /><br />
+        <input
+  type="file"
+  name="image"
+  onChange={(e) => setImage(e.target.files[0])}
+/>
 
+<br /><br />
         <select
           name="status"
           value={formData.status}

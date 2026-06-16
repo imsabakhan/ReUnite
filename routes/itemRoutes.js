@@ -106,14 +106,27 @@ router.put("/:id/found", async (req, res) => {
 });
 
 // Edit Item
-router.put("/:id", async (req, res) => {
+router.put("/:id", upload.single("image"), async (req, res) => {
   try {
-    const updatedItem =
-      await LostItem.findByIdAndUpdate(
-        req.params.id,
-        req.body,
-        { new: true }
-      );
+    const updateData = {
+      title: req.body.title,
+      description: req.body.description,
+      category: req.body.category,
+      location: req.body.location,
+      status: req.body.status,
+      contactEmail: req.body.contactEmail,
+    };
+
+    // only update image if new file is uploaded
+    if (req.file) {
+      updateData.image = req.file.path;
+    }
+
+    const updatedItem = await LostItem.findByIdAndUpdate(
+      req.params.id,
+      updateData,
+      { new: true }
+    );
 
     res.status(200).json(updatedItem);
   } catch (error) {

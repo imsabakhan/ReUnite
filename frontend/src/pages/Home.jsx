@@ -9,6 +9,7 @@ function Home() {
   const [items, setItems] = useState([]);
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState("all");
+  const [image, setImage] = useState(null);
 
   useEffect(() => {
     fetchItems();
