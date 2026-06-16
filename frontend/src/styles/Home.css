@@ -95,7 +95,12 @@ cursor: pointer;
 color: whitesmoke;
 font-weight: 600;
 transition: 0.3s;
-background-color: #589024;
+background-color: #2653f6;
+padding: 10px 20px;
+width: 200px;
+font-size: 14px;
+width: fit-content;
+height: 45px;
 }
 
 /* Search */
@@ -121,7 +126,7 @@ margin-bottom: 25px;
 }
 
 .filters button {
-background: #e5e7eb;
+background: #9fb9eb;
 color: #111827;
 padding: 10px 16px;
 }

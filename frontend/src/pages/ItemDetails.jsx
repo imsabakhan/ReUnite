@@ -1,3 +1,4 @@
+import API_URL from "../config";
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import axios from "axios";
@@ -6,25 +7,32 @@ function ItemDetails() {
   const { id } = useParams();
 
   const [item, setItem] = useState(null);
+  const [loading, setLoading] = useState(true);
 
+  // Fetch item
   useEffect(() => {
     fetchItem();
-  }, []);
+  }, [id]);
 
   const fetchItem = async () => {
     try {
-      const res = await axios.get(`${API_URL}/items/${id}`);
+      setLoading(true);
+
+      const res = await axios.get(`${API_URL}/api/items/${id}`);
 
       setItem(res.data);
     } catch (err) {
       console.log(err);
+    } finally {
+      setLoading(false);
     }
   };
 
+  // Mark as found
   const markAsFound = async () => {
     try {
       const res = await axios.put(
-        `https://reunite-j7qe.onrender.com/api/items/${id}/found`
+        `${API_URL}/api/items/${id}/found`
       );
 
       setItem(res.data);
@@ -36,7 +44,8 @@ function ItemDetails() {
     }
   };
 
-  if (!item) {
+  // Loading state
+  if (loading || !item) {
     return <h2>Loading...</h2>;
   }
 
@@ -62,9 +71,7 @@ function ItemDetails() {
         <strong>Status:</strong>{" "}
         <span
           className={`status-badge ${
-            item.status === "lost"
-              ? "lost-badge"
-              : "found-badge"
+            item.status === "lost" ? "lost-badge" : "found-badge"
           }`}
         >
           {item.status.toUpperCase()}
@@ -77,14 +84,12 @@ function ItemDetails() {
         </button>
       </a>
 
-      {" "}
-
       {item.status === "lost" && (
         <button
           onClick={markAsFound}
           style={{
             marginLeft: "10px",
-            backgroundColor: "#22c55e"
+            backgroundColor: "#22c55e",
           }}
         >
           ✅ Mark as Found
