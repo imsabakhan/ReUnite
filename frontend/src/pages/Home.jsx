@@ -15,7 +15,7 @@ function Home() {
 
   const fetchItems = async () => {
     try {
-      const res = await axios.get(`${API_URL}/items`);
+      const res = await axios.get(`${API_URL}/api/items`);
 
       setItems(res.data);
     } catch (err) {
@@ -31,9 +31,7 @@ function Home() {
     if (!confirmDelete) return;
 
     try {
-      await axios.delete(
-        `http://localhost:8000/api/items/${id}`
-      );
+      await axios.delete(`${API_URL}/api/items/${id}`);
 
       setItems(
         items.filter(
