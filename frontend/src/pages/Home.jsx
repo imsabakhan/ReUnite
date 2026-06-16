@@ -1,3 +1,4 @@
+console.log("API_URL FROM CONFIG:", API_URL);
 import API_URL from "../config";
 import { useEffect, useState } from "react";
 import axios from "axios";
