@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
+import API_URL from "../config";
 
 function EditItem() {
   const { id } = useParams();
@@ -15,20 +16,22 @@ function EditItem() {
     contactEmail: "",
   });
 
+  // Fetch item on load
   useEffect(() => {
     fetchItem();
-  }, []);
+  }, [id]);
 
   const fetchItem = async () => {
     try {
-      const res = await axios.get(`${API_URL}/items/${id}`);
+      const res = await axios.get(`${API_URL}/api/items/${id}`);
 
       setFormData(res.data);
     } catch (err) {
-      console.log(err);
+      console.log("Fetch error:", err);
     }
   };
 
+  // Handle input change
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -36,20 +39,20 @@ function EditItem() {
     });
   };
 
+  // Submit updated data
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
       await axios.put(
-        `http://localhost:8000/api/items/${id}`,
+        `${API_URL}/api/items/${id}`,
         formData
       );
 
       alert("Item updated successfully!");
-
       navigate("/");
     } catch (err) {
-      console.log(err);
+      console.log("Update error:", err);
       alert("Error updating item");
     }
   };
