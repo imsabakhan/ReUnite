@@ -16,6 +16,8 @@ function EditItem() {
     contactEmail: "",
   });
 
+const [image, setImage] = useState(null);
+
   // Fetch item on load
   useEffect(() => {
     fetchItem();
