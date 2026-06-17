@@ -31,27 +31,6 @@ function Home() {
     fetchItems();
   }, []);
 
-  // Delete item
-  const handleDelete = async (id) => {
-    const confirmDelete = window.confirm(
-      "Are you sure you want to delete this item?"
-    );
-
-    if (!confirmDelete) return;
-
-    try {
-      await axios.delete(`${API_URL}/api/items/${id}`);
-
-      setItems((prev) => prev.filter((item) => item._id !== id));
-
-      alert("Item deleted successfully!");
-    } catch (err) {
-      console.log(err);
-      alert("Error deleting item");
-    }
-  };
-
-  // Optimized filtering (IMPORTANT FIX)
   const filteredItems = items.filter((item) => {
     const matchSearch = item.title
       .toLowerCase()
@@ -63,7 +42,6 @@ function Home() {
     return matchSearch && matchFilter;
   });
 
-  // ✅ FIXED: loading must be AFTER hooks
   if (loading) {
     return <p style={{ textAlign: "center" }}>Loading items...</p>;
   }
@@ -76,12 +54,19 @@ function Home() {
           <img src="/logo.png" alt="ReUnite Logo" className="logo" />
           <h2>ReUnite</h2>
         </div>
+      <div className="nav-links">
+  <Link to="/">Home</Link>
 
-        <div className="nav-links">
-          <Link to="/">Home</Link>
-          <Link to="/add">Report Item</Link>
-        </div>
+  <Link to="/add">
+    Report Item
+  </Link>
+
+  <Link to="/admin">
+    Admin
+  </Link>
+</div>
       </nav>
+
 
       {/* Main Container */}
       <div className="container">
@@ -160,15 +145,8 @@ function Home() {
                   </a>
 
                   <Link to={`/edit/${item._id}`}>
-                    <button className="edit-btn">✏️ Edit</button>
+                    <button className="edit-btn">Edit</button>
                   </Link>
-
-                  <button
-                    className="delete-btn"
-                    onClick={() => handleDelete(item._id)}
-                  >
-                    🗑 Delete
-                  </button>
                 </div>
               </div>
             ))
