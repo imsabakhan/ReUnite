@@ -29,6 +29,8 @@ router.post("/", auth, upload.single("image"), async (req, res) => {
 router.get("/", async (req, res) => {
   try {
     const items = await LostItem.find();
+
+    res.set("Cache-Control", "no-store");
     res.json(items);
   } catch (err) {
     res.status(500).json({ message: err.message });

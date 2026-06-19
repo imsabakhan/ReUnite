@@ -21,7 +21,11 @@ function Home() {
     try {
       setLoading(true);
 
-      const res = await axios.get(`${API_URL}/api/items`);
+     const res = await axios.get(`${API_URL}/api/items`, {
+  headers: {
+    "Cache-Control": "no-cache"
+  }
+});
 
       setItems(res.data);
     } catch (err) {
