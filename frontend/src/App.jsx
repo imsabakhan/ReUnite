@@ -5,6 +5,7 @@ import AddItem from "./pages/AddItem";
 import ItemDetails from "./pages/ItemDetails";
 import EditItem from "./pages/EditItem";
 import Admin from "./pages/Admin";
+import Register from "./pages/Register";
 
 function App() {
   return (
@@ -19,6 +20,10 @@ function App() {
       <Route
   path="/edit/:id"
   element={<EditItem />}
+/>
+<Route
+  path="/register"
+  element={<Register />}
 />
     </Routes>
   );

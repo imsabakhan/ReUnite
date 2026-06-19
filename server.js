@@ -4,6 +4,9 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const itemRoutes = require("./routes/itemRoutes");
+const authRoutes = require(
+  "./routes/authRoutes"
+);
 
 const app = express();
 
@@ -19,7 +22,9 @@ app.use(
 );
 app.use(express.json());
 
+
 app.use("/api/items", itemRoutes);
+app.use("/api/auth", authRoutes);
 
 app.get("/", (req, res) => {
   res.send("Welcome to ReUnite API 🚀");
@@ -35,7 +40,6 @@ app.get("/test", (req, res) => {
 
 const PORT = process.env.PORT || 8000;
 
-// ✅ IMPORTANT FIX: connect DB first, THEN start server
 mongoose.connect(process.env.MONGO_URI)
   .then(() => {
     console.log("MongoDB Connected");

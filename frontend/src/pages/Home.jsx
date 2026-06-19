@@ -64,6 +64,10 @@ function Home() {
   <Link to="/admin">
     Admin
   </Link>
+  
+  <Link to="/register">
+  Register
+</Link>
 </div>
       </nav>
 
