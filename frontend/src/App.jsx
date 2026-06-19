@@ -6,6 +6,8 @@ import ItemDetails from "./pages/ItemDetails";
 import EditItem from "./pages/EditItem";
 import Admin from "./pages/Admin";
 import Register from "./pages/Register";
+import Login from "./pages/Login";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   return (
@@ -13,9 +15,13 @@ function App() {
       <Route path="/" element={<Home />} />
       <Route path="/add" element={<AddItem />} />
       <Route path="/item/:id" element={<ItemDetails />} />
-      <Route
+  <Route
   path="/admin"
-  element={<Admin />}
+  element={
+    <ProtectedRoute>
+      <Admin />
+    </ProtectedRoute>
+  }
 />
       <Route
   path="/edit/:id"
@@ -24,6 +30,10 @@ function App() {
 <Route
   path="/register"
   element={<Register />}
+/>
+<Route
+  path="/login"
+  element={<Login />}
 />
     </Routes>
   );

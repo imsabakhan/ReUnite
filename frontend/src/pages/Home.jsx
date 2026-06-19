@@ -12,6 +12,10 @@ function Home() {
   const [filter, setFilter] = useState("all");
   const [loading, setLoading] = useState(true);
 
+  const user = JSON.parse(
+  localStorage.getItem("user")
+);
+
   // Fetch items
   const fetchItems = async () => {
     try {
@@ -55,19 +59,46 @@ function Home() {
           <h2>ReUnite</h2>
         </div>
       <div className="nav-links">
-  <Link to="/">Home</Link>
 
-  <Link to="/add">
-    Report Item
-  </Link>
+<Link to="/">Home</Link>
 
-  <Link to="/admin">
-    Admin
-  </Link>
-  
-  <Link to="/register">
-  Register
+<Link to="/add">
+  Report Item
 </Link>
+
+{user ? (
+  <>
+    <Link to="/admin">
+      Admin
+    </Link>
+
+    <button
+      className="logout-btn"
+      onClick={() => {
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+        window.location.reload();
+      }}
+    >
+      Logout
+    </button>
+  </>
+) : (
+  <>
+    <Link to="/register">
+      Register
+    </Link>
+
+    <Link to="/login">
+      Login
+    </Link>
+  </>
+)}
+        {user && (
+  <div className="welcome-user">
+    Welcome, {user.name} 👋
+  </div>
+)}
 </div>
       </nav>
 
