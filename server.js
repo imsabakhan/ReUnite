@@ -21,6 +21,10 @@ app.use(
   })
 );
 app.use(express.json());
+app.use((req, res, next) => {
+  console.log("REQUEST HIT:", req.method, req.url);
+  next();
+});
 
 
 app.use("/api/items", itemRoutes);
@@ -37,6 +41,7 @@ app.get("/test", (req, res) => {
     </form>
   `);
 });
+
 
 const PORT = process.env.PORT || 8000;
 

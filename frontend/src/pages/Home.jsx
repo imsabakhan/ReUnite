@@ -52,55 +52,7 @@ function Home() {
 
   return (
     <>
-      {/* Navbar */}
-      <nav className="navbar">
-        <div className="logo-section">
-          <img src="/logo.png" alt="ReUnite Logo" className="logo" />
-          <h2>ReUnite</h2>
-        </div>
-      <div className="nav-links">
 
-<Link to="/">Home</Link>
-
-<Link to="/add">
-  Report Item
-</Link>
-
-{user ? (
-  <>
-    <Link to="/admin">
-      Admin
-    </Link>
-
-    <button
-      className="logout-btn"
-      onClick={() => {
-        localStorage.removeItem("token");
-        localStorage.removeItem("user");
-        window.location.reload();
-      }}
-    >
-      Logout
-    </button>
-  </>
-) : (
-  <>
-    <Link to="/register">
-      Register
-    </Link>
-
-    <Link to="/login">
-      Login
-    </Link>
-  </>
-)}
-        {user && (
-  <div className="welcome-user">
-    Welcome, {user.name} 👋
-  </div>
-)}
-</div>
-      </nav>
 
 
       {/* Main Container */}
@@ -178,10 +130,6 @@ function Home() {
                   <a href={`mailto:${item.contactEmail}`}>
                     <button className="contact-btn">📧 Contact</button>
                   </a>
-
-                  <Link to={`/edit/${item._id}`}>
-                    <button className="edit-btn">Edit</button>
-                  </Link>
                 </div>
               </div>
             ))

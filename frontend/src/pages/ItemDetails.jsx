@@ -9,7 +9,8 @@ function ItemDetails() {
   const [item, setItem] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // Fetch item
+  const user = JSON.parse(localStorage.getItem("user"));
+
   useEffect(() => {
     fetchItem();
   }, [id]);
@@ -17,9 +18,7 @@ function ItemDetails() {
   const fetchItem = async () => {
     try {
       setLoading(true);
-
       const res = await axios.get(`${API_URL}/api/items/${id}`);
-
       setItem(res.data);
     } catch (err) {
       console.log(err);
@@ -28,30 +27,34 @@ function ItemDetails() {
     }
   };
 
-  // Mark as found
-  const markAsFound = async () => {
-    try {
-      const res = await axios.put(
-        `${API_URL}/api/items/${id}/found`
-      );
+  const token = localStorage.getItem("token");
 
-      setItem(res.data);
+const markAsFound = async () => {
+  try {
+    const res = await axios.put(
+      `${API_URL}/api/items/${id}/found`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
 
-      alert("✅ Item marked as found!");
-    } catch (err) {
-      console.log(err);
-      alert("Failed to update item");
-    }
-  };
+    setItem(res.data);
+    alert("Item marked as found");
+  } catch (err) {
+    console.log(err);
+  }
+};
 
-  // Loading state
   if (loading || !item) {
     return <h2>Loading...</h2>;
   }
 
   return (
     <div className="container">
-      <Link to="/">⬅ Back</Link>
+      <Link to="/">Back</Link>
 
       <h1>{item.title}</h1>
 
@@ -80,19 +83,24 @@ function ItemDetails() {
 
       <a href={`mailto:${item.contactEmail}`}>
         <button className="contact-btn">
-          📧 Contact Owner
+          Contact Owner
         </button>
       </a>
 
-      {item.status === "lost" && (
+      {user && user.role === "admin" && item.status === "lost" && (
         <button
           onClick={markAsFound}
           style={{
             marginLeft: "10px",
             backgroundColor: "#22c55e",
+            color: "white",
+            padding: "10px 15px",
+            border: "none",
+            borderRadius: "8px",
+            cursor: "pointer",
           }}
         >
-          ✅ Mark as Found
+          Mark as Found
         </button>
       )}
 

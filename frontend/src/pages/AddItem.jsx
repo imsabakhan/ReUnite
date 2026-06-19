@@ -25,43 +25,39 @@ function AddItem() {
     });
   };
 
-  // submit form
   const handleSubmit = async (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    const data = new FormData();
+  const data = new FormData();
 
-    data.append("title", formData.title);
-    data.append("description", formData.description);
-    data.append("category", formData.category);
-    data.append("location", formData.location);
-    data.append("status", formData.status);
-    data.append("contactEmail", formData.contactEmail);
+  data.append("title", formData.title);
+  data.append("description", formData.description);
+  data.append("category", formData.category);
+  data.append("location", formData.location);
+  data.append("status", formData.status);
+  data.append("contactEmail", formData.contactEmail);
 
-    if (image) {
-      data.append("image", image);
-    }
+  if (image) {
+    data.append("image", image);
+  }
 
-    try {
-      await axios.post(`${API_URL}/api/items`, data, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+  const token = localStorage.getItem("token");
 
-      alert("Item Reported Successfully!");
-      navigate("/");
-    } catch (err) {
-      console.log("FULL ERROR:", err);
-      console.log("RESPONSE:", err.response?.data);
+  try {
+    await axios.post(`${API_URL}/api/items`, data, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${token}`,   // 🔥 THIS IS REQUIRED
+      },
+    });
 
-      alert(
-        err.response?.data?.message ||
-        "Something went wrong"
-      );
-    }
-  };
-
+    alert("Item Reported Successfully!");
+    navigate("/");
+  } catch (err) {
+    console.log(err);
+    alert(err.response?.data?.message || "Something went wrong");
+  }
+};
   return (
     <div style={{ padding: "20px" }}>
       <h2>Report Lost Item</h2>

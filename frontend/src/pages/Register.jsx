@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import API_URL from "../config";
 import { useNavigate } from "react-router-dom";
+import "../styles/Auth.css";
 
 function Register() {
   const navigate = useNavigate();

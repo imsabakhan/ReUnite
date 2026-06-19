@@ -1,51 +1,49 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import API_URL from "../config";
 import "../styles/Admin.css";
 
 function Admin() {
   const [items, setItems] = useState([]);
+  const navigate = useNavigate();
 
+  // ✅ Admin protection
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("user"));
+
+    if (!user || user.role !== "admin") {
+      navigate("/");
+    }
+  }, [navigate]);
+
+  // ✅ Fetch items
   useEffect(() => {
     fetchItems();
   }, []);
 
   const fetchItems = async () => {
     try {
-      const res = await axios.get(
-        `${API_URL}/api/items`
-      );
-
+      const res = await axios.get(`${API_URL}/api/items`);
       setItems(res.data);
     } catch (err) {
       console.log(err);
     }
   };
 
-  const handleDelete = async (id) => {
-    const confirmDelete = window.confirm(
-      "Are you sure you want to delete this item?"
-    );
+  // ✅ GET TOKEN INSIDE FUNCTIONS (important fix)
+  const getToken = () => localStorage.getItem("token");
 
-    if (!confirmDelete) return;
-
-    try {
-      await axios.delete(
-        `${API_URL}/api/items/${id}`
-      );
-
-      fetchItems();
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
+  // ✅ MARK AS FOUND
   const markAsFound = async (id) => {
     try {
       await axios.put(
-        `${API_URL}/api/items/${id}`,
+        `${API_URL}/api/items/${id}/found`,
+        {},
         {
-          status: "found",
+          headers: {
+            Authorization: `Bearer ${getToken()}`,
+          },
         }
       );
 
@@ -55,11 +53,27 @@ function Admin() {
     }
   };
 
+  // ✅ DELETE (FIXED - THIS WAS MISSING)
+  const handleDelete = async (id) => {
+    try {
+      const confirmDelete = window.confirm("Delete this item?");
+      if (!confirmDelete) return;
+
+      await axios.delete(`${API_URL}/api/items/${id}`, {
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        },
+      });
+
+      fetchItems();
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <div className="admin-container">
-      <h1 className="admin-title">
-        Admin Dashboard
-      </h1>
+      <h1 className="admin-title">Admin Dashboard</h1>
 
       <div className="stats">
         <div className="stat-card total-card">
@@ -69,26 +83,12 @@ function Admin() {
 
         <div className="stat-card lost-card">
           <h3>Lost Items</h3>
-          <p>
-            {
-              items.filter(
-                (item) =>
-                  item.status === "lost"
-              ).length
-            }
-          </p>
+          <p>{items.filter(i => i.status === "lost").length}</p>
         </div>
 
         <div className="stat-card found-card">
           <h3>Found Items</h3>
-          <p>
-            {
-              items.filter(
-                (item) =>
-                  item.status === "found"
-              ).length
-            }
-          </p>
+          <p>{items.filter(i => i.status === "found").length}</p>
         </div>
       </div>
 
@@ -132,18 +132,14 @@ function Admin() {
               <td className="admin-actions">
                 <button
                   className="admin-found"
-                  onClick={() =>
-                    markAsFound(item._id)
-                  }
+                  onClick={() => markAsFound(item._id)}
                 >
                   ✓ Found
                 </button>
 
                 <button
                   className="admin-delete"
-                  onClick={() =>
-                    handleDelete(item._id)
-                  }
+                  onClick={() => handleDelete(item._id)}
                 >
                   Delete
                 </button>
